@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { BrowserRouter, Link } from "react-router-dom";
 import qclogo from './assets/aclogo1.png'
 import qclogowhite from './assets/qcfavicon.png'
 import qclogonslogan from './assets/logonslogan.png'
