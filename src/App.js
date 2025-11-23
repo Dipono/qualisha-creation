@@ -83,7 +83,10 @@ function App() {
   };
 
   // Header Component
+  // Header Component with React State
   const Header = () => {
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+
     const navItems = [
       { key: 'home', label: 'Home' },
       { key: 'story', label: 'Our Story' },
@@ -93,16 +96,23 @@ function App() {
       { key: 'contact', label: 'Contact' }
     ];
 
+    const handleNavClick = (key) => {
+      setCurrentPage(key);
+      setIsMenuOpen(false); // Close menu when item is clicked
+    };
+
     return (
       <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
         <div className="container">
           {/* Logo */}
           <div
             className="navbar-brand d-flex align-items-center cursor-pointer m-0 p-0"
-            onClick={() => setCurrentPage('home')}
+            onClick={() => {
+              setCurrentPage('home');
+              setIsMenuOpen(false);
+            }}
             style={{ cursor: 'pointer' }}
           >
-            {/* Main Logo - Always visible */}
             <img
               src={qclogo}
               alt='qclogo'
@@ -112,8 +122,6 @@ function App() {
                 maxHeight: '50px'
               }}
             />
-
-            {/* Slogan Logo - Responsive sizing */}
             <img
               src={qclogonslogan}
               alt='qc logo slogan'
@@ -122,7 +130,6 @@ function App() {
                 height: '45px',
                 width: 'auto',
                 maxWidth: '250px',
-                // Responsive sizing for different screens
                 maxHeight: '45px'
               }}
             />
@@ -132,25 +139,24 @@ function App() {
           <button
             className="navbar-toggler"
             type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarNav"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-controls="navbarNav"
-            aria-expanded="false"
+            aria-expanded={isMenuOpen}
             aria-label="Toggle navigation"
           >
             <span className="navbar-toggler-icon"></span>
           </button>
 
           {/* Navigation items */}
-          <div className="collapse navbar-collapse" id="navbarNav">
+          <div className={`collapse navbar-collapse ${isMenuOpen ? 'show' : ''}`} id="navbarNav">
             <ul className="navbar-nav ms-auto">
               {navItems.map((item) => (
                 <li key={item.key} className="nav-item">
                   <button
                     className={`nav-link btn btn-link text-decoration-none ${currentPage === item.key ? 'text-danger fw-bold' : 'text-dark'
                       }`}
-                    onClick={() => setCurrentPage(item.key)}
-                    style={{ border: 'none', background: 'none' }}
+                    onClick={() => handleNavClick(item.key)}
+                    style={{ border: 'none', background: 'none', textAlign: 'left', width: '100%' }}
                   >
                     {item.label}
                   </button>
